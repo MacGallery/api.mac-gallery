@@ -22,7 +22,9 @@ class StoreProductVariantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'product_id' => 'required',
+            'name' => 'required|string',
+            'price' => 'required|numeric',
         ];
     }
 }
