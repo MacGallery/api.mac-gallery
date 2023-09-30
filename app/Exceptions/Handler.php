@@ -28,17 +28,4 @@ class Handler extends ExceptionHandler
             //
         });
     }
-
-    // public function render($request, Throwable $e)
-    // {
-    //     if ($e instanceof ModelNotFoundException && $request->getContentTypeFormat() == 'json') {
-    //         return response()->json([
-    //             'status' => [
-    //                 'code' => '404',
-    //                 'message' => 'The data you are looking for was not found'
-    //             ]
-    //         ]);
-    //     }
-    //     return parent::render($request, $e);
-    // }
 }
