@@ -24,7 +24,7 @@ class ProductTypeController extends Controller
      */
     public function store(StoreProductTypeRequest $request)
     {
-        $productType = ProductType::create($request->all());
+        $productType = ProductType::create($request->validated());
         return $this->success(new ProductTypeResource($productType), 'Product Type data added successfully');
     }
 
@@ -41,7 +41,7 @@ class ProductTypeController extends Controller
      */
     public function update(UpdateProductTypeRequest $request, ProductType $productType)
     {
-        $productType->update($request->all());
+        $productType->update($request->validated());
         return $this->success(new ProductTypeResource($productType), 'Product data has been successfully changed');
     }
 

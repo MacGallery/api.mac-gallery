@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->all());
+        $product = Product::create($request->validated());
         return $this->success(new ProductResource($product), 'Product data added successfully');
     }
 
@@ -41,7 +41,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update($request->all());
+        $product->update($request->validated());
         return $this->success(new ProductResource($product), 'Product data has been successfully changed');
     }
 
