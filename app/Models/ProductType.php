@@ -9,7 +9,11 @@ class ProductType extends Model
 {
     use HasFactory;
 
-    public function products(){
+    protected $fillable = ['name'];
+    // protected $guarded = [];
+
+    public function products()
+    {
         return $this->hasMany(Product::class);
     }
 }

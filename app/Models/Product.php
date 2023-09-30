@@ -9,15 +9,22 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function type(){
+    protected $fillable = ['name', 'product_type_id', 'price'];
+    // protected $guarded = [];
+
+
+    public function type()
+    {
         return $this->belongsTo(ProductType::class);
     }
 
-    public function variants(){
+    public function variants()
+    {
         return $this->hasMany(ProductVariant::class);
     }
 
-    public function spareParts(){
+    public function spareParts()
+    {
         return $this->belongsToMany(ProductSparePart::class);
     }
 }
