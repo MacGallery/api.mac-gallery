@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\ProductVariant;
 use App\Http\Requests\StoreProductVariantRequest;
 use App\Http\Requests\UpdateProductVariantRequest;
+use App\Http\Resources\ProductVariantResource;
+use Illuminate\Http\Request;
 
 class ProductVariantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $productVariants = ProductVariant::paginate($request->per_page);
+        return $this->success(new ProductVariantResource($productVariants), 'Product Variant data is successfully displayed');
     }
 
     /**
@@ -21,7 +24,8 @@ class ProductVariantController extends Controller
      */
     public function store(StoreProductVariantRequest $request)
     {
-        //
+        $productVariant = ProductVariant::create($request->validated());
+        return $this->success(new ProductVariantResource($productVariant), 'Product Variant data added successfully');
     }
 
     /**
@@ -29,7 +33,7 @@ class ProductVariantController extends Controller
      */
     public function show(ProductVariant $productVariant)
     {
-        //
+        return $this->success(new ProductVariantResource($productVariant), 'Product Variant data is successfully displayed');
     }
 
     /**
@@ -37,7 +41,8 @@ class ProductVariantController extends Controller
      */
     public function update(UpdateProductVariantRequest $request, ProductVariant $productVariant)
     {
-        //
+        $productVariant->update($request->validated());
+        return $this->success(new ProductVariantResource($productVariant), 'Product Variant data has been successfully changed');
     }
 
     /**
@@ -45,6 +50,7 @@ class ProductVariantController extends Controller
      */
     public function destroy(ProductVariant $productVariant)
     {
-        //
+        $productVariant->delete();
+        return $this->success(new ProductVariantResource($productVariant), 'Product Variant data has been successfully deleted');
     }
 }

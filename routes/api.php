@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\ProductVariantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleare' => ['api']], function () {
     Route::apiResource('products', ProductController::class);
     Route::apiResource('product-types', ProductTypeController::class);
+    Route::apiResource('product-variants', ProductVariantController::class);
 });

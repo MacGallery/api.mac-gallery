@@ -9,6 +9,9 @@ class ProductVariant extends Model
 {
     use HasFactory;
 
+    protected $fillable = ["product_id", "name", "price"];
+    // protected $guarded = [];
+
     public function product()
     {
         return $this->belongsTo(Product::class);
