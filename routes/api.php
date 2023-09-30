@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductSparePartController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\ProductVariantController;
 use Illuminate\Http\Request;
@@ -25,4 +26,5 @@ Route::group(['middleare' => ['api']], function () {
     Route::apiResource('products', ProductController::class);
     Route::apiResource('product-types', ProductTypeController::class);
     Route::apiResource('product-variants', ProductVariantController::class);
+    Route::apiResource('product-spare-parts', ProductSparePartController::class);
 });

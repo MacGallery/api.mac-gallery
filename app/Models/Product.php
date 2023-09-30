@@ -25,6 +25,6 @@ class Product extends Model
 
     public function spareParts()
     {
-        return $this->belongsToMany(ProductSparePart::class);
+        return $this->belongsToMany(ProductSparePart::class, 'product_has_product_spare_parts');
     }
 }

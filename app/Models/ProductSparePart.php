@@ -9,8 +9,11 @@ class ProductSparePart extends Model
 {
     use HasFactory;
 
+    protected $fillable = ["name", "price", "stock", "visible"];
+    // protected $guarded = [];
+
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class, 'product_has_product_spare_parts');
     }
 }
