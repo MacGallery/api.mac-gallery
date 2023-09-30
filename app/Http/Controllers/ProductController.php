@@ -40,6 +40,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
+        $product->update($request->all());
         return $this->success($product, 'Product data has been successfully changed');
     }
 
