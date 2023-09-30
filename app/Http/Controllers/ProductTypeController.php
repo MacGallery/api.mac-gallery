@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductType;
+use App\Http\Resources\ProductTypeResource;
 use App\Http\Requests\StoreProductTypeRequest;
 use App\Http\Requests\UpdateProductTypeRequest;
+use Illuminate\Http\Request;
 
 class ProductTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $productTypes = ProductType::paginate($request->per_page);
+        return $this->success(new ProductTypeResource($productTypes), 'Product Type data is successfully displayed');
     }
 
     /**
@@ -21,7 +24,8 @@ class ProductTypeController extends Controller
      */
     public function store(StoreProductTypeRequest $request)
     {
-        //
+        $productType = ProductType::create($request->all());
+        return $this->success(new ProductTypeResource($productType), 'Product Type data added successfully');
     }
 
     /**
@@ -29,7 +33,7 @@ class ProductTypeController extends Controller
      */
     public function show(ProductType $productType)
     {
-        //
+        return $this->success(new ProductTypeResource($productType), 'Product data is successfully displayed');
     }
 
     /**
@@ -37,7 +41,8 @@ class ProductTypeController extends Controller
      */
     public function update(UpdateProductTypeRequest $request, ProductType $productType)
     {
-        //
+        $productType->update($request->all());
+        return $this->success(new ProductTypeResource($productType), 'Product data has been successfully changed');
     }
 
     /**
@@ -45,6 +50,7 @@ class ProductTypeController extends Controller
      */
     public function destroy(ProductType $productType)
     {
-        //
+        $productType->delete();
+        return $this->success(new ProductTypeResource($productType), 'Product data has been successfully deleted');
     }
 }

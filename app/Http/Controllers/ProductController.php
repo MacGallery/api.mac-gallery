@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,7 +16,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = Product::paginate($request->per_page);
-        return $this->success($products, 'Product data is successfully displayed');
+        return $this->success(new ProductResource($products), 'Product data is successfully displayed');
     }
 
     /**
@@ -24,7 +25,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $product = Product::create($request->all());
-        return $this->success($product, 'Product data added successfully');
+        return $this->success(new ProductResource($product), 'Product data added successfully');
     }
 
     /**
@@ -32,7 +33,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return $this->success($product, 'Product data is successfully displayed');
+        return $this->success(new ProductResource($product), 'Product data is successfully displayed');
     }
 
     /**
@@ -41,7 +42,7 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->all());
-        return $this->success($product, 'Product data has been successfully changed');
+        return $this->success(new ProductResource($product), 'Product data has been successfully changed');
     }
 
     /**
@@ -50,6 +51,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return $this->success($product, 'Product data has been successfully deleted');
+        return $this->success(new ProductResource($product), 'Product data has been successfully deleted');
     }
 }
