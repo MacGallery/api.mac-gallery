@@ -42,7 +42,7 @@ class ProductTypeController extends Controller
     public function update(UpdateProductTypeRequest $request, ProductType $productType)
     {
         $productType->update($request->validated());
-        return $this->success(new ProductTypeResource($productType), 'Product data has been successfully changed');
+        return $this->success(new ProductTypeResource($productType), 'Product data has been successfully updated');
     }
 
     /**

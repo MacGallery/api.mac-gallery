@@ -41,8 +41,15 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
+        // dd($request->validated());
+        if ($request->has('attaches')) {
+            $product->spareParts()->syncWithoutDetaching($request->attaches);
+        }
+        if ($request->has('detaches')) {
+            $product->spareParts()->detach($request->detaches);
+        }
         $product->update($request->validated());
-        return $this->success(new ProductResource($product), 'Product data has been successfully changed');
+        return $this->success(new ProductResource($product), 'Product data has been successfully updated');
     }
 
     /**

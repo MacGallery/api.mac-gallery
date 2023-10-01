@@ -42,7 +42,7 @@ class ProductSparePartController extends Controller
     public function update(UpdateProductSparePartRequest $request, ProductSparePart $productSparePart)
     {
         $productSparePart->update($request->validated());
-        return $this->success(new ProductSparePartResource($productSparePart), 'Product data has been successfully changed');
+        return $this->success(new ProductSparePartResource($productSparePart), 'Product data has been successfully updated');
     }
 
     /**

@@ -22,7 +22,9 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:products,name,' . $this->id . ',id'
+            'name' => 'unique:products,name,' . $this->route('product')->id . ',id',
+            'attaches' => 'array',
+            'attaches.*' => 'numeric|exists:product_spare_parts,id',
         ];
     }
 }

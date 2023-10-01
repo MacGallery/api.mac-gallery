@@ -42,7 +42,7 @@ class ProductVariantController extends Controller
     public function update(UpdateProductVariantRequest $request, ProductVariant $productVariant)
     {
         $productVariant->update($request->validated());
-        return $this->success(new ProductVariantResource($productVariant), 'Product Variant data has been successfully changed');
+        return $this->success(new ProductVariantResource($productVariant), 'Product Variant data has been successfully updated');
     }
 
     /**
