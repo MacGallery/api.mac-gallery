@@ -17,6 +17,9 @@ class ProductSparePart extends Model implements HasMedia
     use HasFactory, InteractsWithMedia, Sortable, Searchable, Filterable;
 
     // protected $with = ['category'];
+    protected $casts = [
+        'item_price' => 'integer'
+    ];
 
     public $searchable = ['name', 'category.name'];
     public $filterable = ['product_category_id'];
@@ -32,7 +35,7 @@ class ProductSparePart extends Model implements HasMedia
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_has_product_spare_parts')->withPivot(['item_price', 'service_price', 'stock', 'additional_info', 'product_id'])->as('products');
+        return $this->belongsToMany(Product::class, 'product_has_product_spare_parts')->withPivot(['item_price', 'service_price', 'stock', 'additional_info', 'product_id', 'id']);
     }
 
     public function registerMediaConversions(Media $media = null): void

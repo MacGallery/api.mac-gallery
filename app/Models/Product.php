@@ -49,7 +49,7 @@ class Product extends Model implements HasMedia
 
     public function spareParts()
     {
-        return $this->belongsToMany(ProductSparePart::class, 'product_has_product_spare_parts')->withPivot(['item_price', 'service_price', 'stock', 'additional_info', 'product_id']);
+        return $this->belongsToMany(ProductSparePart::class, 'product_has_product_spare_parts')->withPivot(['item_price', 'service_price', 'stock', 'additional_info', 'product_id', 'id']);
     }
 
     public function registerMediaConversions(Media $media = null): void

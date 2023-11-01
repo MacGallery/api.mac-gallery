@@ -40,9 +40,8 @@ class SparePartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductSparePartRequest $request)
+    public function store(Product $product, StoreProductSparePartRequest $request)
     {
-        //
     }
 
     /**

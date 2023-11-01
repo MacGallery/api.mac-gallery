@@ -30,7 +30,7 @@ Route::group(['middleare' => ['api']], function () {
     Route::delete('/products/bulk-delete', [ProductController::class, 'bulkDelete']);
     Route::apiResource('products', ProductController::class);
     Route::apiResource('products/{product}/variants', VariantController::class)->parameter('variants', 'product_variant');
-    Route::apiResource('products/{product}/spare-parts', SparePartController::class)->only(['index']);
+    Route::apiResource('products/{product}/spare-parts', SparePartController::class)->only(['index', 'store']);
 
     Route::apiResource('product-categories', ProductCategoryController::class);
     Route::apiResource('product-variants', ProductVariantController::class);

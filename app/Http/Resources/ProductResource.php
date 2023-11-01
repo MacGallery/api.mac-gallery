@@ -15,7 +15,6 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         // return (new PaginatorCollection($this));
-        dd($this);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -24,7 +23,6 @@ class ProductResource extends JsonResource
             'category' => new ProductCategoryResource($this->whenLoaded('category')),
             'variants' => new ProductVariantCollection($this->whenLoaded('variants')),
             'spareParts' => new ProductSparePartCollection($this->whenLoaded('spareParts')),
-            // $this->merge($this->whenPivotLoaded('product_has_product_spare_parts', $this->pivot)),
             'image' => $this->getFirstMediaUrl('image'),
             'visible' => $this->visible,
             'created_at' => $this->created_at,
