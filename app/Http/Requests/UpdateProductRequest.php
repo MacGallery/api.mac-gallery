@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -22,9 +24,12 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'unique:products,name,' . $this->route('product')->id . ',id',
-            'attaches' => 'array',
-            'attaches.*' => 'numeric|exists:product_spare_parts,id',
+            'name' => 'string',
+            'product_category_id' => 'integer|numeric',
+            'description' => 'string|nullable',
+            'visible' => 'boolean',
+            // 'image' => $imageRule
+            'image' => 'image|nullable'
         ];
     }
 }

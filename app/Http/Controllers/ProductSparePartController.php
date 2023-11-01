@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\ProductSparePart;
 use App\Http\Requests\StoreProductSparePartRequest;
 use App\Http\Requests\UpdateProductSparePartRequest;
-use App\Http\Resources\ProductSparePartResource;
+use App\Http\Resources\ProductSparePartCollection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductSparePartController extends Controller
 {
@@ -15,8 +16,19 @@ class ProductSparePartController extends Controller
      */
     public function index(Request $request)
     {
-        $productSpareParts = ProductSparePart::paginate($request->per_page);
-        return $this->success(new ProductSparePartResource($productSpareParts), 'Product Spare Part data is successfully displayed');
+        $with = [];
+        if (!Str::of($request->get('with'))->isEmpty()) {
+            $with = explode(',', $request->get('with', ''));
+        }
+        $productSpareParts = [];
+        if ($request->per_page) {
+            $productSpareParts = ProductSparePart::with($with)->search()->filterable($request->all())->sortable()->paginate($request->per_page);
+            $productSpareParts = (new ProductSparePartCollection($productSpareParts))->response()->getData(true);
+        } else {
+            $productSpareParts = ProductSparePart::with($with)->search()->filterable($request->all())->sortable()->get();
+            $productSpareParts = (new ProductSparePartCollection($productSpareParts));
+        }
+        return $this->success($productSpareParts, 'Product Spare Parts data is successfully displayed');
     }
 
     /**
@@ -24,8 +36,7 @@ class ProductSparePartController extends Controller
      */
     public function store(StoreProductSparePartRequest $request)
     {
-        $productSparePart = ProductSparePart::create($request->validated());
-        return $this->success(new ProductSparePartResource($productSparePart), 'Product data added successfully');
+        //
     }
 
     /**
@@ -33,7 +44,7 @@ class ProductSparePartController extends Controller
      */
     public function show(ProductSparePart $productSparePart)
     {
-        return $this->success(new ProductSparePartResource($productSparePart), 'Product data is successfully displayed');
+        //
     }
 
     /**
@@ -41,8 +52,7 @@ class ProductSparePartController extends Controller
      */
     public function update(UpdateProductSparePartRequest $request, ProductSparePart $productSparePart)
     {
-        $productSparePart->update($request->validated());
-        return $this->success(new ProductSparePartResource($productSparePart), 'Product data has been successfully updated');
+        //
     }
 
     /**
@@ -50,7 +60,6 @@ class ProductSparePartController extends Controller
      */
     public function destroy(ProductSparePart $productSparePart)
     {
-        $productSparePart->delete();
-        return $this->success(new ProductSparePartResource($productSparePart), 'Product data has been successfully deleted');
+        //
     }
 }

@@ -14,12 +14,12 @@ class Controller extends BaseController
     {
         $response = [
             'status' => [
-                'status' => 200,
+                'code' => 200,
                 'message' => $message
             ],
             'data' => $data
         ];
-        return response()->json($response);
+        return response()->json($response, 200, ['Content-Type' => 'application/json']);
     }
 
     public function error($code, $status, $message, $errors = [])

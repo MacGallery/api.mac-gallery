@@ -22,8 +22,13 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'product_type_id' => 'required',
+            'name' => 'required|string',
+            'product_category_id' => 'required|integer',
+            'description' => 'string|nullable',
+            'visible' => 'boolean',
+            // 'images' => 'array|nullable',
+            // 'images.*' => 'image',
+            'image' => 'image|nullable'
         ];
     }
 }

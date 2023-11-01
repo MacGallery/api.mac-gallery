@@ -21,10 +21,18 @@ class StoreProductVariantRequest extends FormRequest
      */
     public function rules(): array
     {
+        // if ($this->route()->hasParameter('product')) {
+        //     $this->request->add(['product_id' => $this->route()->product->id]);
+        // }
         return [
-            'product_id' => 'required|exists:products,id',
+            // 'product_id' => 'required|exists:products,id',
+            ...($this->route()->hasParameter('product') ? [] : ['product_id' => 'required|exists:products,id']),
             'name' => 'required|string',
-            'price' => 'required|numeric',
+            'price' => 'required|integer',
+            'stock' => 'integer',
+            'visible' => 'boolean',
+            'images' => 'array|nullable',
+            'images.*' => 'image'
         ];
     }
 }

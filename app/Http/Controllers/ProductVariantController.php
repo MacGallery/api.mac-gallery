@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductVariant;
 use App\Http\Requests\StoreProductVariantRequest;
 use App\Http\Requests\UpdateProductVariantRequest;
+use App\Http\Resources\ProductVariantCollection;
 use App\Http\Resources\ProductVariantResource;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,16 @@ class ProductVariantController extends Controller
      */
     public function index(Request $request)
     {
-        $productVariants = ProductVariant::paginate($request->per_page);
-        return $this->success(new ProductVariantResource($productVariants), 'Product Variant data is successfully displayed');
+        $productVariants = [];
+        if ($request->per_page) {
+            $productVariants = ProductVariant::search()->filterable($request->all())->sortable()->paginate($request->per_page);
+            $productVariants = (new ProductVariantCollection($productVariants))->response()->getData(true);
+        } else {
+            $productVariants = ProductVariant::search()->filterable($request->all())->sortable()->get();
+            $productVariants = (new ProductVariantCollection($productVariants));
+        }
+        // $productVariants = ProductVariant::search()->sortable()->paginate($request->per_page ?? 10);
+        return $this->success($productVariants, 'Product Variant data is successfully displayed');
     }
 
     /**

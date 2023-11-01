@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Product\SparePartController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Product\VariantController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductSparePartController;
-use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\ProductVariantController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +26,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleare' => ['api']], function () {
+    Route::put('/products/bulk-update', [ProductController::class, 'bulkUpdate']);
+    Route::delete('/products/bulk-delete', [ProductController::class, 'bulkDelete']);
     Route::apiResource('products', ProductController::class);
-    Route::apiResource('product-types', ProductTypeController::class);
+    Route::apiResource('products/{product}/variants', VariantController::class)->parameter('variants', 'product_variant');
+    Route::apiResource('products/{product}/spare-parts', SparePartController::class)->only(['index']);
+
+    Route::apiResource('product-categories', ProductCategoryController::class);
     Route::apiResource('product-variants', ProductVariantController::class);
     Route::apiResource('product-spare-parts', ProductSparePartController::class);
+
+    Route::post('/uploads', [UploadController::class, 'upload']);
 });

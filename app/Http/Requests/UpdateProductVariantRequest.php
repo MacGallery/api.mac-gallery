@@ -22,7 +22,10 @@ class UpdateProductVariantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'string',
+            'price' => 'integer',
+            'stock' => 'integer',
+            'visible' => 'boolean',
         ];
     }
 }

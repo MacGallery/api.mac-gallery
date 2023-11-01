@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_has_product_spare_parts', function (Blueprint $table) {
+        Schema::create('product_spare_parts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id');
-            $table->foreignId('product_spare_part_id');
+            $table->foreignId('product_category_id');
+            $table->string('name');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_has_product_spare_parts');
+        Schema::dropIfExists('product_spare_parts');
     }
 };

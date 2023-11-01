@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 class ProductVariantResource extends JsonResource
 {
@@ -14,6 +15,16 @@ class ProductVariantResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'price' => $this->price,
+            'stock' => $this->stock,
+            'visible' => $this->visible,
+            'product_id' => $this->product_id,
+            'product' => new ProductResource($this->whenLoaded('product')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }

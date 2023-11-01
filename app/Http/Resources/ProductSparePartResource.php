@@ -14,6 +14,14 @@ class ProductSparePartResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'image' => $this->whenLoaded('media', $this->getFirstMediaUrl('image')),
+            'category' => new ProductCategoryResource($this->whenLoaded('category')),
+            'products' => new ProductCollection($this->whenLoaded('products')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }

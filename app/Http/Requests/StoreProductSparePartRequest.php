@@ -11,7 +11,7 @@ class StoreProductSparePartRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,8 +22,9 @@ class StoreProductSparePartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'price' => 'required',
+            'product_category_id' => 'required|exists:product_categories,id',
+            'name' => 'required|string',
+            'image' => 'integer',
         ];
     }
 }

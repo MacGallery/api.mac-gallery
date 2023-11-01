@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->string('name');
-            $table->integer('price');
+            $table->integer('price')->default(0);
             $table->integer('stock')->default(0);
 
             $table->boolean('visible')->default(true);
