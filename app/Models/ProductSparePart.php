@@ -18,7 +18,8 @@ class ProductSparePart extends Model implements HasMedia
 
     // protected $with = ['category'];
     protected $casts = [
-        'item_price' => 'integer'
+        'item_price' => 'integer',
+        'visible' => 'boolean', 
     ];
 
     public $searchable = ['name', 'category.name'];

@@ -26,6 +26,8 @@ class UpdateProductVariantRequest extends FormRequest
             'price' => 'integer',
             'stock' => 'integer',
             'visible' => 'boolean',
+            'images' => 'array|nullable',
+            // 'images.*' => 'image'
         ];
     }
 }

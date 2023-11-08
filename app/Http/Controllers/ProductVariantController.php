@@ -7,7 +7,10 @@ use App\Http\Requests\StoreProductVariantRequest;
 use App\Http\Requests\UpdateProductVariantRequest;
 use App\Http\Resources\ProductVariantCollection;
 use App\Http\Resources\ProductVariantResource;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 
 class ProductVariantController extends Controller
 {
@@ -33,7 +36,13 @@ class ProductVariantController extends Controller
      */
     public function store(StoreProductVariantRequest $request)
     {
-        $productVariant = ProductVariant::create($request->validated());
+        $validated = $request->validated();
+        $productVariant = ProductVariant::create($validated);
+        if (Arr::has($validated, 'images')) {
+            foreach (Arr::get($validated, 'images') as $image) {
+                $productVariant->addMedia($image)->toMediaCollection('images');
+            }
+        }
         return $this->success(new ProductVariantResource($productVariant), 'Product Variant data added successfully');
     }
 
@@ -50,7 +59,13 @@ class ProductVariantController extends Controller
      */
     public function update(UpdateProductVariantRequest $request, ProductVariant $productVariant)
     {
-        $productVariant->update($request->validated());
+        $validated = $request->validated();
+
+        $productVariant->update($validated);
+        if (Arr::exists($validated, 'images')) {
+            $productVariant->updateImage(Arr::get($validated, 'images'));
+        }
+        // return $this->success(new ProductVariantResource($productVariant), 'Product Variant data has been successfully updated');
         return $this->success(new ProductVariantResource($productVariant), 'Product Variant data has been successfully updated');
     }
 

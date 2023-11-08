@@ -6,8 +6,10 @@ use App\Models\ProductSparePart;
 use App\Http\Requests\StoreProductSparePartRequest;
 use App\Http\Requests\UpdateProductSparePartRequest;
 use App\Http\Resources\ProductSparePartCollection;
+use App\Http\Resources\ProductSparePartResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class ProductSparePartController extends Controller
 {
@@ -36,7 +38,11 @@ class ProductSparePartController extends Controller
      */
     public function store(StoreProductSparePartRequest $request)
     {
-        //
+        $productSparePart = ProductSparePart::create(Arr::except($request->validated(), 'image'));
+        if ($request->has('image')) {
+            $productSparePart->addMedia($request->image)->toMediaCollection('image');
+        }
+        return $this->success(new ProductSparePartResource($productSparePart), 'Product Spare Part data added successfully');
     }
 
     /**
@@ -52,7 +58,12 @@ class ProductSparePartController extends Controller
      */
     public function update(UpdateProductSparePartRequest $request, ProductSparePart $productSparePart)
     {
-        //
+        $validated = $request->validated();
+        $productSparePart->update($validated);
+        if (Arr::has($request, 'image')) {
+            $productSparePart->addMedia($request->file('image'))->toMediaCollection('image');
+        }
+        return $this->success(new ProductSparePartResource($productSparePart), 'Product Spare Part data has been successfully updated');
     }
 
     /**
@@ -60,6 +71,7 @@ class ProductSparePartController extends Controller
      */
     public function destroy(ProductSparePart $productSparePart)
     {
-        //
+        $productSparePart->delete();
+        return $this->success(new ProductSparePartResource($productSparePart), 'Product Spare Part data has been successfully deleted');
     }
 }

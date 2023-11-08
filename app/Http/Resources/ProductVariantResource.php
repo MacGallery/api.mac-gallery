@@ -15,6 +15,7 @@ class ProductVariantResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // dd($this->getImages());
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -22,7 +23,11 @@ class ProductVariantResource extends JsonResource
             'stock' => $this->stock,
             'visible' => $this->visible,
             'product_id' => $this->product_id,
-            'product' => new ProductResource($this->whenLoaded('product')),
+            // 'product' => new ProductResource($this->whenLoaded('product')),
+            'images' => $this->getImages(),
+            // 'images' => collect($this->getImages())->map(function ($e) {
+            //     return ['name' => $e['name'], 'url' => $e['url'], 'uuid' => $e['uuid']];
+            // }),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
