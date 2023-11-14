@@ -25,8 +25,10 @@ class SubstituteBindings extends BaseSubstituteBindings
             $this->router->substituteImplicitBindings($route);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
-                'status' => 404,
-                'message' => 'The data you are looking for was not found'
+                'status' => [
+                    'code' => 404,
+                    'message' => 'The data you are looking for was not found'
+                ]
             ]);
             // if ($route->getMissing()) {
             //     return $route->getMissing()($request, $exception);
